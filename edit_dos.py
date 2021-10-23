@@ -4,7 +4,7 @@ from secml.array import CArray
 
 X = []
 Y = []
-i = 50 # num iterations
+i = 20 # num iterations
 conf = 0.5 # confidence threshold
 
 unoptimizable = 0
@@ -18,11 +18,12 @@ attack = CHeaderEvasion(model, iterations=i, threshold=conf, optimize_all_dos=Fa
 
 for code, name in zip(X,Y):
     _,_,_,final = attack.run(CArray(code), CArray(name[1]))
-    print(attack.confidences_)
-    print(final)
-    total_iters = total_iters + len(attack.confidences_)
-    print(len(attack.confidences_))
-    if final == attack.confidences_[0]:
+    # print(attack.confidences_)
+    # print(final)
+    if (len(attack.confidences_) < (i - 1)):
+        total_iters = total_iters + len(attack.confidences_) - 1
+    print(str(len(attack.confidences_) - 1))
+    if final >= (attack.confidences_[0] - 0.02):
         unoptimizable = unoptimizable + 1
     if len(attack.confidences_) == 2:
         immediate = immediate + 1
@@ -32,5 +33,5 @@ for code, name in zip(X,Y):
 
 print("Not optimized: " + str(unoptimizable) + "/" + str(count))
 print("Successful: " + str(success) + "/" + str(count))
-print("Average iterations: " + str(total_iters / count))
-print("Immediate passes: " + str(immediate) + "/" + str(count))
+print("Average iterations to evade: " + str(total_iters / count))
+print("Immediate evasions: " + str(immediate) + "/" + str(count))
