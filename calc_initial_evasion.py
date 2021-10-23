@@ -29,8 +29,3 @@ def filter_malware(X,Y,file_names):
         confidence = conf[1][0].item()
         Y.append([1 - confidence, confidence])
         file_names.append(loc)
-
-X = []
-Y = []
-file_names = []
-filter_malware(X,Y,file_names)
