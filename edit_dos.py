@@ -4,7 +4,7 @@ from secml.array import CArray
 
 X = []
 Y = []
-i = 50 # num iterations
+i = 20 # num iterations
 conf = 0.5 # confidence threshold
 
 unoptimizable = 0
