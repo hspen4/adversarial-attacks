@@ -6,7 +6,7 @@ from secml.array import CArray
 from secml_malware.models.malconv import MalConv
 from secml_malware.models.c_classifier_end2end_malware import CClassifierEnd2EndMalware, End2EndModel
 
-def filter_malware(X,Y,file_names):
+def filter_malware(X,Y,file_names,printing):
 
     # start malconv
 
@@ -24,7 +24,8 @@ def filter_malware(X,Y,file_names):
             contents = opened.read()
         obj = End2EndModel.bytes_to_numpy(contents,net.get_input_max_length(),256,False)
         _, conf = net.predict(CArray(obj), True)
-        print(file + " has confidence " + str(conf[0,1].item()))
+        if printing:
+        	print(file + " has confidence " + str(conf[0,1].item()))
         X.append(obj)
         confidence = conf[1][0].item()
         Y.append([1 - confidence, confidence])
