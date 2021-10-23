@@ -14,7 +14,7 @@ success = 0
 count = 0
 
 model = filter_malware(X,Y,False)
-attack = CExtendDOSEvasion(model, iterations=i, threshold=conf)
+attack = CExtendDOSEvasion(model, iterations=i, threshold=conf, pe_header_extension=4, is_debug=False, penalty_regularizer=0, chunk_hyper_parameter=4)
 
 for code, name in zip(X,Y):
     _,_,_,final = attack.run(CArray(code), CArray(name[1]))
